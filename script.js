@@ -7,7 +7,7 @@ let ws;
 // connect to backend WebSocket
 function connectWebSocket() {
   // For local backend — use ws://localhost:8080/chat
-  ws = new WebSocket("https://chatbuddy-ux4z.onrender.com");
+  ws = new WebSocket("wss://chatbuddy-ux4z.onrender.com/chat");
 
   ws.onopen = () => {
     console.log("Connected to WebSocket server");
