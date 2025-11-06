@@ -2,15 +2,30 @@ const chatBox = document.getElementById("chat-box");
 const input = document.getElementById("message-input");
 const sendBtn = document.getElementById("send-btn");
 
+const statusDiv = document.createElement("div");
+statusDiv.id = "connection-status";
+statusDiv.style.textAlign = "center";
+statusDiv.style.padding = "8px";
+statusDiv.style.fontWeight = "bold";
+statusDiv.style.color = "#fff";
+statusDiv.style.backgroundColor = "#555";
+statusDiv.textContent = "Connecting...";
+chatBox.parentNode.insertBefore(statusDiv, chatBox);
+
 let ws;
 
 // connect to backend WebSocket
 function connectWebSocket() {
-  // For local backend — use ws://localhost:8080/chat
+  
+  statusDiv.textContent = "Connecting...";
+  statusDiv.style.backgroundColor = "#7196dbff";
+
   ws = new WebSocket("wss://chatbuddy-ux4z.onrender.com/chat");
 
   ws.onopen = () => {
     console.log("Connected to WebSocket server");
+    statusDiv.textContent = "Connected";
+    statusDiv.style.backgroundColor = "#58ae6cff";
   };
 
   ws.onmessage = (event) => {
@@ -21,6 +36,12 @@ function connectWebSocket() {
   ws.onclose = () => {
     console.log("WebSocket disconnected. Reconnecting...");
     setTimeout(connectWebSocket, 3000);
+  };
+
+  ws.onerror = (error) => {
+    console.error("WebSocket error:", error);
+    statusDiv.textContent = "Error in connection. Please try again later.";
+    statusDiv.style.backgroundColor = "#cc7f7fff"; // yellow
   };
 }
 
