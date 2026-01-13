@@ -20,7 +20,7 @@ function connectWebSocket() {
   statusDiv.textContent = "Connecting...";
   statusDiv.style.backgroundColor = "#7196dbff";
 
-  ws = new WebSocket("wss://chatbuddy-ux4z.onrender.com/chat");
+  ws = new WebSocket("wss://chatbuddy-backend-w7oe.onrender.com/chat");
 
   ws.onopen = () => {
     console.log("Connected to WebSocket server");
